@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Add Category</title>
+</head>
+<body>
+    <h1 style="color: grey;">Add Category</h1>
+    <form action="/admin/add_category" method="post">
+        <label for="cname">Category Name</label>
+        <input type="text" name="cname" id="cname">
+        <input type="submit" value="Add Category">
+    </form>
+    {%if message== 1 %}
+        <p>Category Added Successfully</p>
+    {% endif %}
+    <a href="/admin/home">Back to admin dashboard</a>
+</body>
+</html>

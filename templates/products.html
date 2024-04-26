@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Products</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
+        <a class="logo" href="#">MyGrozo</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/user/products">Search</a>
+            </li>
+            {% if logged_in %}
+            <li class="nav-item">
+                <a class="nav-link" href="/user/cart">Cart</a>
+            </li>
+            {% endif %}
+            {% if not logged_in %}
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="wrapper">
+        <p class="m-4">Search and filter</p>
+            <form action="/dashboard" method="post" class="px-5">
+                <div class="row">
+                    <div class="col">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" aria-label="Default select example" name="category" id="category">
+                            <option selected>all</option>
+                            <option value="all">all</option>
+                            {% for category in catalog %}
+                            <option value="{{ category.cname }}">{{ category.cname }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="search" class="form-label mt-2">Search</label>
+                        <div class="d-flex justify-content-end">
+                            <input type="text" name="search" id="search" class="form-control" value="{{search}}" placeholder="Search">
+                            <button type="submit" class="btn btn-primary mx-2">Search</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+        <h1 class="m-5 text-center">Products</h1>
+        <div class="row gap-4 justify-content-center">
+            {% for product in products %}
+            <div class="card" style="width: 18rem;">
+                <img src="{{ product.image_url }}" alt="{{ product.pname }}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title bold">{{ product.pname }}</h5>
+                    <h6 class="font-weight-bold font-italic">₹{{ product.pprice }}</h6>
+                    <p class="card-text">{{ product.category }}</p>
+                    {%if logged_in%}
+                        <a href="/user/view_product/{{ product.pid }}" class="btn btn-primary w-100">View</a>
+                    {%else%}
+                        <a href="/login" class="btn btn-primary w-100">View</a>
+                    {%endif%}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

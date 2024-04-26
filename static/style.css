@@ -1,0 +1,32 @@
+body {
+    height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: grey;
+}
+
+.wrapper {
+    padding: 2em;
+    overflow-y: scroll;
+}
+
+.navbar {
+    padding: 0.5em 1em;
+}
+
+.navbar-nav .nav-item {
+    margin: 0 4px;
+}
+
+.prod-details {
+    margin: 1em 0;
+    margin: none;
+    width: 100%;
+    justify-content: center;
+}
+
+.prod-details .prod-label, .prod-details .prod-value {
+    max-width: 300px;
+}
